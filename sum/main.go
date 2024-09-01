@@ -2,24 +2,34 @@ package main
 
 import "fmt"
 
-// exercise 4.1
+// exercise 4.1, 4.2, 4.3
 
-func sum(array []int) int{
+func sum(array []int) (int, int, int){
 	total := 0
+	quantity := 0
+	max := 0
 	if (len(array) == 0) {
-		return 0
-	} else if (len(array) == 1) {
-		return array[0]
+		return 0, 0, 0
 	} else {
+		if array[0] > max {
+			max = array[0]
+		}
 		total += array[0]
+		quantity += 1
 		array = append(array[1:])
-		total += sum(array)
+		a, b, c := sum(array)
+		total += a
+		quantity += b
+		if c > max {
+			max = c
+		}
 	}
-	return total
+	return total, quantity, max
 }
 
+
 func main() {
-	array := []int{3, 1, 2}
-	total := sum(array)
-	fmt.Println(total)
+	array := []int{3, 1, 2, 4, 10}
+	total, quantity, max := sum(array)
+	fmt.Println(total, quantity, max)
 }
